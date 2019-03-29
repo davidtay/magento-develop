@@ -29,9 +29,3 @@ services:
         - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
         - "./etc/php/www.conf:/usr/local/etc/php-fpm.d/www.conf"
         - "./www:/var/www/m2.extensions-store.com" 
-        - "./www/generated:/var/www/m2.extensions-store.com/generated:delegated" 
-        - "./www/pub:/var/www/m2.extensions-store.com/pub:delegated" 
-        - "./www/var:/var/www/m2.extensions-store.com/var:delegated" 
-
-
-    
