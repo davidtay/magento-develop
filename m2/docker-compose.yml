@@ -28,6 +28,7 @@ services:
       image: m2_es/php
       container_name: m2_es_php
       restart: always
+      user: www-data
       ports: 
         - "19001:9000"
       volumes:
