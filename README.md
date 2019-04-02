@@ -15,7 +15,7 @@ LETSENCRYPT_HOST=local.mysite.com
 LETSENCRYPT_EMAIL=admin@mysite.com
 
 ; PHP 
-PHP_CONTAINER=m2_es_php
+PHP_CONTAINER=mysite_php
 LOCAL_PORT=19001 ; host port that points to your PHP container
 ```
 In the `etc/nginx/conf.d/default.conf`, add your server name (i.e. "local.mysite.com").
