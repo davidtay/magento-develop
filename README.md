@@ -2,10 +2,23 @@
 Development environment for Magento with dockers for M1 and M2
 
 ## Depends
-This repository requires that the Magento Docker project has started with Nginx Proxy, base PHP, MySQL and Redis and running. You will need to create your own PHP container based on the base PHP container, image `magento/php`.
+This repository requires that the Magento Docker project has started with Nginx Proxy, base PHP, MySQL and Redis and running. 
+You will need to create your own PHP container based on the base PHP image `magento/php`.
 
 ## Start
-Select either the m1 or m2 folder. Configure your container names and host in .env. In the `etc/nginx/conf.d/default.conf`, add your server name (i.e. "local.mysite.com").
+Select either the m1 or m2 folder. Configure your container names and virtual host name in the `.env` file:
+```
+; Nginx
+NGINX_CONTAINER=mysite_nginx
+VIRTUAL_HOST=local.mysite.com
+LETSENCRYPT_HOST=local.mysite.com
+LETSENCRYPT_EMAIL=admin@mysite.com
+
+; PHP 
+PHP_CONTAINER=m2_es_php
+LOCAL_PORT=19001 ; host port that points to your PHP container
+```
+In the `etc/nginx/conf.d/default.conf`, add your server name (i.e. "local.mysite.com").
 Create a `www` directory to install Magento to. Run `docker-compose up -d`.
 
 ## Composer
