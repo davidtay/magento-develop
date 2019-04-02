@@ -8,7 +8,7 @@ networks:
 services:
     nginx: 
       image: nginx:alpine
-      container_name: m2_es_nginx
+      container_name: ${NGINX_CONTAINER}
       restart: always
       volumes:
         - "./www:/var/www/html"
@@ -18,19 +18,19 @@ services:
       expose:
         - "80"
       environment:
-        VIRTUAL_HOST: m2.extensions-store.com
-        LETSENCRYPT_HOST: m2.extensions-store.com
-        LETSENCRYPT_EMAIL: admin@extensions-store.com
+        VIRTUAL_HOST: ${VIRTUAL_HOST}
+        LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+        LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
       restart: always
       depends_on:
         - php
     php: 
-      image: m2_es/php
-      container_name: m2_es_php
+      image: magento/php
+      container_name: ${PHP_CONTAINER}
       restart: always
       user: www-data
       ports: 
-        - "19001:9000"
+        - "${LOCAL_PORT}:9000"
       volumes:
         - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
         - "./etc/php/www.conf:/usr/local/etc/php-fpm.d/www.conf"

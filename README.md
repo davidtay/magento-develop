@@ -2,16 +2,14 @@
 Development environment for Magento with dockers for M1 and M2
 
 ## Depends
-This repository requires that the Magento Docker project has started with Nginx Proxy, base PHP, MySQL and Redis and running. You will need to create your own PHP container based on the base PHP container. Create an image of the base PHP:
-`docker commit php mysite/php`
+This repository requires that the Magento Docker project has started with Nginx Proxy, base PHP, MySQL and Redis and running. You will need to create your own PHP container based on the base PHP container, image `magento/php`.
 
 ## Start
-Select either the m1 or m2 folder. In the `etc/nginx/conf.d/default.conf`, add your server name (i.e. "local.mysite.com").
-In the docker-compose.yml replace "local.mysite.com" with your server name.
+Select either the m1 or m2 folder. Configure your container names and host in .env. In the `etc/nginx/conf.d/default.conf`, add your server name (i.e. "local.mysite.com").
 Create a `www` directory to install Magento to. Run `docker-compose up -d`.
 
 ## Composer
-Go here https://getcomposer.org/download/ and get the commands. Then log into your PHP container `docker exec -it mysite_php bash` and run the commands, for example:
+Go here https://getcomposer.org/download/ and get the commands. Then log into your PHP container `docker exec -it --user root mysite_php bash` and run the commands, for example:
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -32,11 +30,10 @@ After installation, run setup:
 ```
 cd html
 php bin/magento setup:install \
-> --base-url=http://local.mysite.com/ \
-> --db-host=mysqldb --db-name=mysite \
-> --db-user=root --db-password=root \
-> --admin-firstname=John --admin-lastname=Doe \
-> --admin-email=jdoe@mysite.com --admin-user=jdoe --admin-password=testing123 \
-> --language=en_US --currency=USD --timezone=America/New_York --use-rewrites=1
-
+--base-url=http://local.mysite.com/ \
+--db-host=mysqldb --db-name=mysite \
+--db-user=root --db-password=root \
+--admin-firstname=John --admin-lastname=Doe \
+--admin-email=jdoe@mysite.com --admin-user=jdoe --admin-password=testing123 \
+--language=en_US --currency=USD --timezone=America/New_York --use-rewrites=1
 ```
