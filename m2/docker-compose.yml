@@ -13,8 +13,9 @@ services:
       volumes:
         - ./www:/var/www/html
         - ./etc/nginx/magento-nginx.conf:/etc/nginx/magento-nginx.conf
-        - ./etc/nginx/certs:/etc/nginx/certs:ro
+        - ./etc/nginx/certs:/etc/nginx/certs
         - ./etc/nginx/conf.d:/etc/nginx/conf.d
+        - ./etc/nginx/scripts:/etc/nginx/scripts
       expose:
         - "80"
         - "443"
@@ -22,9 +23,11 @@ services:
         VIRTUAL_HOST: ${VIRTUAL_HOST}
         VIRTUAL_PROTO: ${VIRTUAL_PROTO}
         VIRTUAL_PORT: ${VIRTUAL_PORT}
+        PHP_CONTAINER: ${PHP_CONTAINER}
       restart: always
       depends_on:
         - php
+      command: /bin/sh /etc/nginx/scripts/start-nginx.sh
     php: 
       image: magento/php${PHP_VERSION}
       container_name: ${PHP_CONTAINER}

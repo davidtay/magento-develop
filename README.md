@@ -6,7 +6,7 @@ This repository requires that the [Magento Docker](https://github.com/davidtay/m
 project has started and that Nginx Proxy, base PHP, MySQL and Redis are running. 
 
 Copy either the m1 or m2 folder to your project folder. 
-Configure your container names, php version and virtual host in the `.env` file:
+Configure your container names, PHP version and virtual host in the `.env` file:
 
 ```
 cp m2 mysite
@@ -26,64 +26,6 @@ VIRTUAL_PORT=443
 PHP_VERSION=7.2
 PHP_CONTAINER=mysite_php
 LOCAL_PORT=19002
-```
-
-If you will be using HTTPS, create a private key and certificate in `etc/nginx/certs`:
-
-```
-cd etc/nginx/certs
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout www.mysite.local.key -out www.mysite.local.crt
-Generating a 2048 bit RSA private key
-.......................+++
-........................................+++
-writing new private key to 'www.mysite.local.key'
------
-You are about to be asked to enter information that will be incorporated
-into your certificate request.
-What you are about to enter is what is called a Distinguished Name or a DN.
-There are quite a few fields but you can leave some blank
-For some fields there will be a default value,
-If you enter '.', the field will be left blank.
------
-Country Name (2 letter code) []:US
-State or Province Name (full name) []:Pennsylvania
-Locality Name (eg, city) []:Philadelphia
-Organization Name (eg, company) []:My Store LLC
-Organizational Unit Name (eg, section) []:
-Common Name (eg, fully qualified host name) []:www.mysite.local
-Email Address []:jdoe@mysite.com
-```
-
-and copy the files to the nginx-proxy configuration of the Magento Docker project:
-
-```
-cd etc/nginx/certs
-cp www.mysite.local.* ~/Documents/Projects/magento-docker/etc/nginx/certs
-cd ~/Documents/Projects/magento-docker
-docker-compose restart
-```
-
-Go back to this project's folder and edit the `etc/nginx/conf.d/default.conf` file:
-
-```
-cd ~/Documents/Projects/magento-develop/mysite
-vi etc/nginx/conf.d/default.conf
-```
-
-adding your server name (i.e. "www.mysite.local") and PHP container name:
-
-```
-# Nginx configuration
-
-upstream fastcgi_backend {
-# use tcp connection
-   server  mysite_php:9000;
-# or socket
-   # server   unix:/run/php/php7.1-fpm.sock;
-}
-
-server {
-   server_name www.mysite.local;
 ```
 
 Create a `www` directory to install Magento to and then run `docker-compose up -d`:
