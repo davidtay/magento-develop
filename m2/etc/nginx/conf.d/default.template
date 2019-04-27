@@ -7,6 +7,16 @@ upstream fastcgi_backend {
    # server   unix:/run/php/php7.1-fpm.sock;
 }
 
+map $request_uri $MAGE_RUN_CODE {
+    default   en;
+    ~^/mysite/  mysite;
+}
+
+map $request_uri $MAGE_RUN_TYPE {
+    default   store;
+    ~^/mysite/  website;
+}
+
 server {
    server_name VIRTUAL_HOST;
    listen 80;
@@ -18,8 +28,6 @@ server {
    proxy_read_timeout 600s;
 
    set $MAGE_ROOT /var/www/html;
-   set $MAGE_RUN_TYPE website;
-   set $MAGE_RUN_CODE base;
 
    include magento-nginx.conf;
 }
@@ -39,8 +47,6 @@ server {
    proxy_read_timeout 600s;
 
    set $MAGE_ROOT /var/www/html;
-   set $MAGE_RUN_TYPE website;
-   set $MAGE_RUN_CODE base;
-
+   
    include magento-nginx.conf;
 }

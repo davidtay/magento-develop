@@ -14,7 +14,8 @@ services:
         - ./www:/var/www/html
         - ./etc/nginx/magento-nginx.conf:/etc/nginx/magento-nginx.conf
         - ./etc/nginx/certs:/etc/nginx/certs
-        - ./etc/nginx/conf.d:/etc/nginx/conf.d
+        - ./etc/nginx/conf.d/default.template:/etc/nginx/conf.d/default.template
+        - ./etc/nginx/conf.d/proxy-settings.conf:/etc/nginx/conf.d/proxy-settings.conf
         - ./etc/nginx/scripts:/etc/nginx/scripts
       expose:
         - "80"
