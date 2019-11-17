@@ -8,7 +8,7 @@ upstream fastcgi_backend {
 }
 
 map $request_uri $MAGE_RUN_CODE {
-    default   en;
+    default   default;
     ~^/mysite/  mysite;
 }
 
