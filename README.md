@@ -39,7 +39,7 @@ docker-compose up -d
 ```
 
 ## Install Magento
-Create your Magento 2 project and download the Magento 2 codebase:
+Log into your instance `docker exec -it mysite_php bash`. Then install Magento.
 
 ```
 cd /var/www/html
