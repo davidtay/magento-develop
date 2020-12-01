@@ -1,9 +1,20 @@
 # Magento Develop
-Docker development environment for Magento 2
+Magento 2 project instance for [Magento Docker](https://github.com/davidtay/magento-docker).
 
-## Start
+## Magento Docker
 This project requires that the [Magento Docker](https://github.com/davidtay/magento-docker) 
-project has started and that Nginx Proxy, base PHP, MySQL, Elasticsearch and Redis are running. 
+project has started and that Nginx Proxy, base PHP, MySQL, Elasticsearch and Redis containers are running.
+
+## Create Project
+Create your project and copy the etc folder, .env and docker-compose.yml files in this project to your project. 
+Suppose this project is in your Documents directory such as ~/Documents/Projects/magento-develop. Then create 
+your project directory one level up:
+
+```
+mkdir ../mysite
+cp -R etc .env docker-compose.yml ../mysite
+cd ../mysite
+```
 
 Configure your container names, PHP version and virtual host in the `.env` file:
 
@@ -27,7 +38,7 @@ mkdir www
 docker-compose up -d
 ```
 
-## Magento 2
+## Install Magento
 Create your Magento 2 project and download the Magento 2 codebase:
 
 ```
