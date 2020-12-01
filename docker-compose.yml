@@ -11,6 +11,7 @@ services:
       container_name: ${NGINX_CONTAINER}
       restart: always
       volumes:
+#        - 'nfsmount:/var/www/html'
         - ./www:/var/www/html
         - ./etc/nginx/magento-nginx.conf:/etc/nginx/magento-nginx.conf
         - ./etc/nginx/certs:/etc/nginx/certs
@@ -25,7 +26,6 @@ services:
         VIRTUAL_PROTO: ${VIRTUAL_PROTO}
         VIRTUAL_PORT: ${VIRTUAL_PORT}
         PHP_CONTAINER: ${PHP_CONTAINER}
-      restart: always
       depends_on:
         - php
       command: /bin/sh /etc/nginx/scripts/start-nginx.sh
@@ -33,10 +33,17 @@ services:
       image: magento/php${PHP_VERSION}
       container_name: ${PHP_CONTAINER}
       restart: always
-      user: www-data
       ports: 
         - "${LOCAL_PORT}:9000"
       volumes:
+#        - 'nfsmount:/var/www/html'
+        - ./www:/var/www/html
         - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
         - ./etc/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-        - ./www:/var/www/html
+#volumes:
+#    nfsmount:
+#      driver: local
+#      driver_opts:
+#        type: nfs
+#        o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+#        device: ":/System/Volumes/Data/${PWD}/www"
