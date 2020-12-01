@@ -20,12 +20,12 @@ PHP_CONTAINER=mysite_php
 LOCAL_PORT=19001
 ```
 
-Start up your nginx/php instance.
+Create `www` directory to host your project and start up your nginx/php project instance:
 
 ```
+mkdir www
 docker-compose up -d
 ```
-
 
 ## Magento 2
 Create your Magento 2 project and download the Magento 2 codebase:
@@ -38,7 +38,7 @@ composer create-project --repository=https://repo.magento.com/magento/project-co
       Password: 
 ```
 
-then run setup:
+then install:
 
 ```
 cd /var/www/html
