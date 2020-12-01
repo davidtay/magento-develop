@@ -91,3 +91,5 @@ volumes:
         o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
         device: ":/System/Volumes/Data/${PWD}/www"
 ```
+
+See https://www.jeffgeerling.com/blog/2020/revisiting-docker-macs-performance-nfs-volumes for more info.
