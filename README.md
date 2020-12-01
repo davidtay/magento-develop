@@ -59,3 +59,35 @@ php bin/magento setup:upgrade
 php bin/magento setup:di:compile
 php bin/magento setup:static-content:deploy 
 ```
+
+## MacOS
+You can use nfs to speed up the Mac-Docker filesystem sharing. Edit
+`sudo vi /etc/exports`: 
+
+```
+/System/Volumes/Data/Users/davidtay/Documents/Projects/mysite/www -alldirs -mapall=501:20 localhost
+```
+
+Then restart the nfs daemon: `sudo nfsd restart`
+
+In the docker-compose.yml, uncomment the nsfmount volume and map the PHP and Nginx filesystems:
+
+```
+    php: 
+      image: magento/php${PHP_VERSION}
+      container_name: ${PHP_CONTAINER}
+      restart: always
+      ports: 
+        - "${LOCAL_PORT}:9000"
+      volumes:
+        - 'nfsmount:/var/www/html'
+        - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+        - ./etc/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+volumes:
+    nfsmount:
+      driver: local
+      driver_opts:
+        type: nfs
+        o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+        device: ":/System/Volumes/Data/${PWD}/www"
+```
